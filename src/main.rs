@@ -20,7 +20,7 @@ fn main() {
             } else if command.starts_with("type type"){ //wrong
                 println!("type is a shell builtin");
             } else {
-                println!("{}: command not found", &command[5..]);
+                println!("{}: not found", &command[5..]);
             }
         } else if command.starts_with("echo ") {
             println!("{}", &command[5..]);
