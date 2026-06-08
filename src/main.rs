@@ -13,7 +13,7 @@ fn main() {
         if command == "exit" {
             break;
         }
-        if command.contains("echo") {
+        else if command.contains("echo") {
             println!("{}", &command[5..]);
         } else {
             println!("{}: command not found", command.trim());
