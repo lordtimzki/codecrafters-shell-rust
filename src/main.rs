@@ -2,8 +2,6 @@
 use std::io::{self, Write};
 
 fn main() {
-
-
     loop {
         let mut command = String::new();
         print!("$ ");
@@ -12,8 +10,7 @@ fn main() {
         command = command.trim().to_string();
         if command == "exit" {
             break;
-        }
-        else if command.contains("echo") {
+        } else if command.contains("echo") {
             println!("{}", &command[5..]);
         } else {
             println!("{}: command not found", command.trim());
