@@ -2,18 +2,23 @@
 use std::io::{self, Write};
 
 fn main() {
+
+
     loop {
         let mut command = String::new();
         print!("$ ");
         io::stdout().flush().unwrap();
-        io::stdin().read_line(&mut command).unwrap();
-        command = command.trim();
+        io::stdin().read_line(&mut command).unwrap().to_string();
+        command = command.trim().to_string();
         if command == "exit" {
             break;
-        } else if command.contains("echo") {
-            println!("{}", &command[5..]);
+        }
+        if command.contains("echo") {
+            print!("{}", &command[5..]);
+            print!("\n");
+            io::stdout().flush().unwrap();
         } else {
-            println!("{}: command not found", command);
+            println!("{}: command not found", command.trim());
         }
     }
 
