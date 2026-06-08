@@ -8,7 +8,8 @@ fn main() {
         let mut command = String::new();
         print!("$ ");
         io::stdout().flush().unwrap();
-        io::stdin().read_line(&mut command).unwrap();
+        io::stdin().read_line(&mut command).unwrap().to_string();
+        command = command.trim().to_string();
         if command == "exit" {
             break;
         }
