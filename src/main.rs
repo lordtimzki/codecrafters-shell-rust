@@ -6,8 +6,8 @@ fn main() {
         let mut command = String::new();
         print!("$ ");
         io::stdout().flush().unwrap();
-        io::stdin().read_line(&mut command).unwrap().to_string();
-        command = command.trim().to_string();
+        io::stdin().read_line(&mut command).unwrap();
+        command = command.trim();
         if command == "exit" {
             break;
         } else if command.contains("echo") {
