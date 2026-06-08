@@ -5,4 +5,7 @@ fn main() {
     print!("$ ");
     io::stdout().flush().unwrap();
 
+    io::stdin().read_line(&mut command).unwrap();
+    
+
 }
