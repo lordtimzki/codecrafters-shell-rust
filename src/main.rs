@@ -12,11 +12,14 @@ fn main() {
         command = command.trim().to_string();
         if command == "exit" {
             break;
-        }
-        if command.contains("echo") {
-            print!("{}", &command[5..]);
-            print!("\n");
-            io::stdout().flush().unwrap();
+        } else if command.starts_with("type "){
+            if command.contains("echo") {
+                println!("echo is a shell builtin");
+            } else {
+                println!("{}: command not found", &command[5..]);
+            }
+        } else if command.starts_with("echo ") {
+            println!("{}", &command[5..]);
         } else {
             println!("{}: command not found", command.trim());
         }
