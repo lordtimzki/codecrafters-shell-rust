@@ -14,9 +14,7 @@ fn main() {
             break;
         }
         if command.contains("echo") {
-            print!("{}", &command[5..]);
-            print!("\n");
-            io::stdout().flush().unwrap();
+            println!("{}", &command[5..]);
         } else {
             println!("{}: command not found", command.trim());
         }
