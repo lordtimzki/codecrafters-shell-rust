@@ -17,9 +17,9 @@ fn main() {
                 println!("echo is a shell builtin");
             } else if command.contains("exit"){
                 println!("exit is a shell builtin");
-            } else if command.starts_with("type type"){ //wrong
+            } else if command.starts_with("type type"){
                 println!("type is a shell builtin");
-            } else {
+            } else { 
                 println!("{}: not found", &command[5..]);
             }
         } else if command.starts_with("echo ") {
