@@ -12,7 +12,7 @@ fn main() {
     loop {
         let mut command = String::new();
         let path = env::var("PATH").unwrap();
-        let mut folders = path.split(":");
+        let folders = path.split(":");
         print!("$ ");
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut command).unwrap().to_string();
@@ -56,11 +56,11 @@ fn main() {
             let mut found = false;
             for folder in folders {
                 let path_check = Path::new(folder);
-                let final_path = path_check.join(command);
+                let final_path = path_check.join(cmd);
                 if let Ok(metadata) = fs::metadata(&final_path) {
                     if metadata.permissions().mode() & 0o111 != 0 {
-                        let arguements = rest.split_whitespace()
-                        let mut status = Command:new(final_path).args(arguements);
+                        let arguements = rest.split_whitespace();
+                        let status = Command::new(final_path).args(arguements);
                         found = true;
                         break;
                     }  
