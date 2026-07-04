@@ -2,6 +2,7 @@
 use std::io::{self, Write};
 use std::env;
 use std::path::Path;
+use std::fs;
 use std::os::unix::fs::PermissionsExt;
 
 fn main() {
