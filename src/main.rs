@@ -61,9 +61,9 @@ fn main() {
                     if metadata.permissions().mode() & 0o111 != 0 {
                         let arguements = rest.split_whitespace();
                         let raw_output = Command::new(final_path).args(arguements).output().unwrap();
-                        let output = String::from_utf8_lossy(&raw.output);
-                        if !stdout.is_empty() {
-                            print!("{}", stdout);
+                        let output = String::from_utf8_lossy(&raw_output.stdout);
+                        if !output.is_empty() {
+                            print!("{}", output);
                             found = true;
                             break;
                         }
