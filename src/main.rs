@@ -2,6 +2,7 @@
 use std::io::{self, Write};
 use std::env;
 use std::path::Path;
+use std::os::unix::fs::PermissionsExt;
 
 fn main() {
 
@@ -30,10 +31,12 @@ fn main() {
                 for folder in folders {
                     let path_check = Path::new(folder);
                     let final_path = path_check.join(command_name);
-                    if final_path.exists() {
-                        println!("{} is {}", command_name, final_path.display());
-                        found = true;
-                        break;
+                    if let Ok(metadata) = fs::metadata(&inal_path) {
+                        if meta.permissions().mode() & 0o111 != 0 {
+                            println!("{} is {}", command_name, final_path.display());
+                            found = true;
+                            break;
+                        }
                     }
                 }
                 if !found {
