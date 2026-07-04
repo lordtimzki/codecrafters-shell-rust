@@ -29,7 +29,7 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                 return true;
             } else if command_name == "exit" {
                 println!("exit is a shell builtin");
-                return false;
+                return true;
             } 
             else {
                 let found = false;
@@ -43,12 +43,8 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                         }
                     }
                 }
-                if !found {
-                    println!("{}: not found", command_name);
-                    return false;
-                } else {
-                    return true;
-                }
+                println!("{}: not found", command_name);
+                return true;
             }
         } else if cmd == "echo" {
             println!("{}", rest);
@@ -56,7 +52,6 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
         }
         else {
             //check file execution
-            let found = false;
             for folder in folders {
                 let path_check = Path::new(folder);
                 let final_path = path_check.join(cmd);
@@ -72,12 +67,8 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                     }
                 }
             }
-            if !found {
-                println!("{}: command not found", cmd);
-                return false;
-            } else {
-                return true;
-            }
+            println!("{}: command not found", cmd);
+            return true;
         }
 }
 
