@@ -18,23 +18,27 @@ fn main() {
             break;
         } else if command.starts_with("type "){
             let command_name = &command[5..];
-            if command.contains("echo") {
+            if command_name == "echo" {
                 println!("echo is a shell builtin");
-            } else if command.contains("exit"){
+            } else if command_name == "echo" {
                 println!("exit is a shell builtin");
-            } else if command.starts_with("type type"){
+            } else if command_name == "type" {
                 println!("type is a shell builtin");
             } 
             else {
-                for folder in &folders.next() {
+                let mut found = false;
+                for folder in folders {
                     let path_check = Path::new(folder);
                     let final_path = path_check.join(command_name);
                     if final_path.exists() {
-                        println!("{} is {}", command_name, path_check.display());
+                        println!("{} is {}", command_name, final_path.display());
+                        found = true;
                         break;
                     }
                 }
-                println!("{}: not found", command_name);
+                if !found {
+                    println!("{}: not found", command_name);
+                }
             }
         } else if command.starts_with("echo ") {
             println!("{}", &command[5..]);
