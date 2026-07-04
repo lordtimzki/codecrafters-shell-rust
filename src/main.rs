@@ -4,6 +4,7 @@ use std::env;
 use std::path::Path;
 use std::fs;
 use std::os::unix::fs::PermissionsExt;
+use std::process::Command;
 
 fn main() {
 
@@ -16,14 +17,15 @@ fn main() {
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut command).unwrap().to_string();
         command = command.trim().to_string();
-        if command == "exit" {
+        let mut parts = command.splitn(2, ' ');
+        let cmd = parts.next().unwrap_or("");
+        let rest = parts.next().unwrap_or("").trim_start();
+        if cmd == "exit" {
             break;
-        } else if command.starts_with("type "){
-            let command_name = &command[5..];
+        } else if cmd == "type" {
+            let command_name = rest;
             if command_name == "echo" {
                 println!("echo is a shell builtin");
-            } else if command_name == "echo" {
-                println!("exit is a shell builtin");
             } else if command_name == "type" {
                 println!("type is a shell builtin");
             } else if command_name == "exit" {
@@ -46,10 +48,27 @@ fn main() {
                     println!("{}: not found", command_name);
                 }
             }
-        } else if command.starts_with("echo ") {
+        } else if cmd == "echo" {
             println!("{}", &command[5..]);
-        } else {
-            println!("{}: command not found", command.trim());
+        }
+        else {
+            //check file execution
+            let mut found = false;
+            for folder in folders {
+                let path_check = Path::new(folder);
+                let final_path = path_check.join(command);
+                if let Ok(metadata) = fs::metadata(&final_path) {
+                    if metadata.permissions().mode() & 0o111 != 0 {
+                        let arguements = rest.split_whitespace()
+                        let mut status = Command:new(final_path).args(arguements);
+                        found = true;
+                        break;
+                    }  
+                }
+            }
+            if !found {
+                println!("{}: command not found", command.trim());
+            }
         }
     }
 
