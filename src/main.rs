@@ -52,7 +52,7 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
             return true;
         } else if cmd == "cd" {
             if let Err(e) = std::env::set_current_dir(rest) {
-                eprintln!("{}: {}: {}", cmd, rest, e);
+                eprintln!("{}: {}: No such file or directory", cmd, rest);
             }
             return true;
         }
