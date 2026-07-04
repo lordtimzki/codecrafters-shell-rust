@@ -59,8 +59,8 @@ fn main() {
                 let final_path = path_check.join(cmd);
                 if let Ok(metadata) = fs::metadata(&final_path) {
                     if metadata.permissions().mode() & 0o111 != 0 {
-                        let arguements = rest.split_whitespace();
-                        let raw_output = Command::new(final_path).args(arguements).output().unwrap();
+                        let arguments = rest.split_whitespace();
+                        let raw_output = Command::new(cmd).args(arguments).output().unwrap();
                         let output = String::from_utf8_lossy(&raw_output.stdout);
                         if !output.is_empty() {
                             print!("{}", output);
