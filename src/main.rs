@@ -32,7 +32,7 @@ fn main() {
                 for folder in folders {
                     let path_check = Path::new(folder);
                     let final_path = path_check.join(command_name);
-                    if let Ok(metadata) = fs::metadata(&inal_path) {
+                    if let Ok(metadata) = fs::metadata(&final_path) {
                         if metadata.permissions().mode() & 0o111 != 0 {
                             println!("{} is {}", command_name, final_path.display());
                             found = true;
