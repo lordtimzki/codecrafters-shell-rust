@@ -30,7 +30,9 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
             } else if command_name == "exit" {
                 println!("exit is a shell builtin");
                 return true;
-            } 
+            } else if command_name == "pwd" {
+                println!("pwd is a shell builtin");
+            }
             else {
                 for folder in folders {
                     let path_check = Path::new(folder);
