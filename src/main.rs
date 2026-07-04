@@ -26,6 +26,8 @@ fn main() {
                 println!("exit is a shell builtin");
             } else if command_name == "type" {
                 println!("type is a shell builtin");
+            } else if command_name == "exit" {
+                println!("exit is a shell builtin");
             } 
             else {
                 let mut found = false;
