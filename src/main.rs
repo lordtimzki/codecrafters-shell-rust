@@ -60,9 +60,13 @@ fn main() {
                 if let Ok(metadata) = fs::metadata(&final_path) {
                     if metadata.permissions().mode() & 0o111 != 0 {
                         let arguements = rest.split_whitespace();
-                        let output = Command::new(final_path).args(arguements).output();
-                        found = true;
-                        break;
+                        let raw_output = Command::new(final_path).args(arguements).output().unwrap();
+                        let output = String::from_utf8_lossy(&raw.output);
+                        if !stdout.is_empty() {
+                            print!("{}", stdout);
+                            found = true;
+                            break;
+                        }
                     }  
                 }
             }
