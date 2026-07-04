@@ -60,7 +60,7 @@ fn main() {
                 if let Ok(metadata) = fs::metadata(&final_path) {
                     if metadata.permissions().mode() & 0o111 != 0 {
                         let arguements = rest.split_whitespace();
-                        let status = Command::new(final_path).args(arguements);
+                        let output = Command::new(final_path).args(arguements).output();
                         found = true;
                         break;
                     }  
