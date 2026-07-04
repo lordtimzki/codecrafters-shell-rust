@@ -6,14 +6,6 @@ use std::fs;
 use std::os::unix::fs::PermissionsExt;
 use std::process::Command;
 
-//fn find_in_path(cmd: &str, path: &str) -> Option<std::path::PathBuf> {
-
-//}
-
-//fn is_executable(path: &std::path::Path) -> bool {
-
-//}
-
 fn handle_builtin(cmd: &str, rest: &str) -> bool {
         let path = env::var("PATH").unwrap();
         let folders = path.split(":");
@@ -32,6 +24,9 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                 return true;
             } else if command_name == "pwd" {
                 println!("pwd is a shell builtin");
+                return true;
+            } else if command_name == "cd" {
+                println!("cd is a shell builtin");
                 return true;
             }
             else {
@@ -54,6 +49,11 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
         } else if cmd == "pwd" {
             let current_dir = env::current_dir().unwrap();
             println!("{}", current_dir.display());
+            return true;
+        } else if cmd == "cd" {
+            if let Err(e) = std::env::set_current_dir(rest) {
+                eprintln!("{}: {}: {}", cmd, rest, e);
+            }
             return true;
         }
         else {
