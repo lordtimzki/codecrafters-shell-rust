@@ -32,7 +32,6 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                 return true;
             } 
             else {
-                let found = false;
                 for folder in folders {
                     let path_check = Path::new(folder);
                     let final_path = path_check.join(command_name);
@@ -48,6 +47,10 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
             }
         } else if cmd == "echo" {
             println!("{}", rest);
+            return true;
+        } else if cmd == "pwd" {
+            let current_dir = env::current_dir().unwrap();
+            println!("{}", current_dir.display());
             return true;
         }
         else {
