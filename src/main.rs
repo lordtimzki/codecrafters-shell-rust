@@ -8,6 +8,7 @@ use std::process::Command;
 
 fn handle_builtin(cmd: &str, rest: &str) -> bool {
         let path = env::var("PATH").unwrap();
+        let home = env::var("HOME").unwrap();
         let folders = path.split(":");
         if cmd == "exit" {
             return false;
@@ -51,7 +52,10 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
             println!("{}", current_dir.display());
             return true;
         } else if cmd == "cd" {
-            if let Err(e) = std::env::set_current_dir(rest) {
+            if rest == "~" {
+                let _ = std::env::set_current_dir(home);
+            }
+            else if let Err(_e) = std::env::set_current_dir(rest) {
                 eprintln!("{}: {}: No such file or directory", cmd, rest);
             }
             return true;
