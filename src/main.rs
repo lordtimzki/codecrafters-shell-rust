@@ -1,11 +1,15 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
+use std::env;
+use std::path::Path;
 
 fn main() {
 
 
     loop {
         let mut command = String::new();
+        let path = env::var("PATH").unwrap();
+        let mut folders = path.split(":");
         print!("$ ");
         io::stdout().flush().unwrap();
         io::stdin().read_line(&mut command).unwrap().to_string();
@@ -13,14 +17,24 @@ fn main() {
         if command == "exit" {
             break;
         } else if command.starts_with("type "){
+            let command_name = &command[5..];
             if command.contains("echo") {
                 println!("echo is a shell builtin");
             } else if command.contains("exit"){
                 println!("exit is a shell builtin");
             } else if command.starts_with("type type"){
                 println!("type is a shell builtin");
-            } else { 
-                println!("{}: not found", &command[5..]);
+            } 
+            else {
+                for folder in &folders.next() {
+                    let path_check = Path::new(folder);
+                    let final_path = path_check.join(command_name);
+                    if final_path.exists() {
+                        println!("{} is {}", command_name, path_check.display());
+                        break;
+                    }
+                }
+                println!("{}: not found", command_name);
             }
         } else if command.starts_with("echo ") {
             println!("{}", &command[5..]);
