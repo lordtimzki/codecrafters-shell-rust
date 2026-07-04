@@ -32,6 +32,7 @@ fn handle_builtin(cmd: &str, rest: &str) -> bool {
                 return true;
             } else if command_name == "pwd" {
                 println!("pwd is a shell builtin");
+                return true;
             }
             else {
                 for folder in folders {
